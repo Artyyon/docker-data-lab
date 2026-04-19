@@ -1,111 +1,134 @@
 # 🚀 Docker Data Lab
 
-Ambiente Docker pronto para estudos, desenvolvimento e prototipação de projetos com Python e banco de dados.
+Modular Docker environment for studies, development, and rapid prototyping.
 
-Este projeto foi criado para evitar perder tempo configurando tudo do zero sempre que inicio um novo estudo ou experimento.
+This repository provides two independent and reusable environments:
 
----
-
-# 📦 Stack incluída
-
-- 🐍 Jupyter Notebook
-- 🐘 PostgreSQL
-- 📊 pgAdmin
-- 🐳 Docker Compose
-- 🔗 Rede interna entre serviços
-- 💾 Persistência de dados com volumes
+- 📓 Jupyter Notebook for Python studies and experiments
+- 🐘 PostgreSQL + pgAdmin for database practice and local development
 
 ---
 
-# 🎯 Objetivo
+# ✨ Features
 
-Fornecer uma base reutilizável para:
-
-- Estudos em Data Science
-- Projetos com Python
-- Testes com SQL
-- Análise de dados
-- Prototipação rápida
-- Aprendizado com Docker
+- Separate Docker Compose stacks
+- Custom Jupyter image
+- PostgreSQL database ready to use
+- pgAdmin web interface
+- Internal Docker network
+- Persistent volumes
+- Reusable project structure
+- Fast local setup
 
 ---
 
-# ⚙️ Como executar
+# 📁 Project Structure
 
-## 1. Clone o repositório
-
-```bash
-git clone https://github.com/seuusuario/docker-data-lab.git
-cd docker-data-lab
+```text
+docker-data-lab/
+├── jupyter/
+│   ├── docker-compose.yml
+│   ├── Dockerfile
+│   ├── .env.example
+│   └── notebooks/
+│
+├── database/
+│   └── docker-compose.yml
+│
+├── docs/
+│   └── setup.md
+│
+├── .gitignore
+└── README.md
 ```
 
-## 2. Crie o arquivo .env
+---
 
-Use como base:
+# 📓 Jupyter Environment
+
+Includes:
+
+- Jupyter Notebook
+- Custom Python image
+- Mounted local notebooks folder
+- Token authentication
+
+## Run
 
 ```bash
+cd jupyter
 cp .env.example .env
-```
-
-Exemplo:
-
-```env
-PYTHON_VERSION=3.11
-IMAGE_VERSION=1.0
-JUPYTER_TOKEN=admin123
-```
-
-## 3. Suba os containers
-
-```bash
 docker compose up -d --build
 ```
 
----
+## Access
 
-# 🌐 Acessos
-
-## Jupyter Notebook
 http://localhost:8888
 
-Token definido no `.env`
+Use the token defined in `.env`.
 
-## pgAdmin
+---
+
+# 🐘 Database Environment
+
+Includes:
+
+- PostgreSQL
+- pgAdmin
+- Persistent storage
+- Shared Docker network
+
+## Run
+
+```bash
+docker network create rede_estudo
+cd database
+docker compose up -d
+```
+
+## Access pgAdmin
+
 http://localhost:5050
 
-Login:
+### Default Credentials
 
+**pgAdmin**
 - Email: admin@admin.com
-- Senha: admin
+- Password: admin
 
-## PostgreSQL
-
+**PostgreSQL**
 - Host: postgres
-- Porta: 5432
+- Port: 5432
 - User: admin
 - Password: admin
 - Database: estudo_db
 
 ---
 
-# 📁 Persistência
+# 🧠 Use Cases
 
-Os dados do PostgreSQL e pgAdmin ficam salvos em volumes Docker.
-
----
-
-# 💡 Possíveis melhorias futuras
-
-- Adicionar Redis
-- Adicionar FastAPI
-- Adicionar Airflow
-- Ambiente para Machine Learning
-- VS Code Dev Container
-- Testes automatizados
+- Data Science studies
+- SQL learning
+- Python experiments
+- Rapid prototypes
+- Docker practice
+- Local database environment
 
 ---
 
-# 👨‍💻 Autor
+# 🔮 Future Improvements
 
-Arthur (Art)  
-Desenvolvedor | IA | Automação | Python
+- Redis support
+- FastAPI service
+- Airflow integration
+- Automated tests
+- CI/CD pipeline
+- Dev Containers
+
+---
+
+# 👨‍💻 Author
+
+Arthur Paes Leme Stiegler (Art)
+
+Computer Science | AI | Automation | Python
