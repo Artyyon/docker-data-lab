@@ -1,0 +1,46 @@
+services:
+  jupyter:
+    # Build local com o Dockerfile da pasta atual
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Versão do Python usada na imagem (vem do .env)
+        PYTHON_VERSION: ${PYTHON_VERSION}
+
+    # Nome da imagem gerada (opcional, mas ajuda a identificar)
+    # Tag da imagem inclui a versão do Python para ficar explícito
+    image: development_environment:py${PYTHON_VERSION}-${IMAGE_VERSION}
+
+    # Nome fixo do container (opcional)
+    # container_name: [name]
+
+    # Mapeia porta do host -> container
+    # host:8888 acessa o jupyter do container:8888
+    ports:
+      - "8888:8888"
+
+    # Monta seus notebooks locais dentro do container
+    # Tudo em ./notebooks aparecerá em /workspace
+    volumes:
+      - ./notebooks:/workspace
+
+    # Carrega variáveis do arquivo .env (recomendado para segredos)
+    # Crie um arquivo .env na mesma pasta com:
+    #   JUPYTER_TOKEN=um_token_bem_grande_aqui
+    env_file:
+      - .env
+
+    # Override do CMD do Dockerfile para incluir o token fixo
+    # - token vem do .env
+    # - evita o Jupyter gerar token novo automaticamente
+    command: >
+      jupyter notebook
+      --ip=0.0.0.0
+      --port=8888
+      --no-browser
+      --allow-root
+      --NotebookApp.token=${JUPYTER_TOKEN}
+
+    # Reinício automático (descomente se quiser)
+    restart: unless-stopped
